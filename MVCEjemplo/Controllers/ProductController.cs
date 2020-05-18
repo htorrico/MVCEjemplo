@@ -13,8 +13,18 @@ namespace MVCEjemplo.Controllers
         public ActionResult Index()
         {
             List<ProductModel> models = new List<ProductModel>();
-            models.Add(new ProductModel { ProductID = 1, Name = "Laptop" });
-            models.Add(new ProductModel { ProductID = 2, Name = "Mouse" });
+            if (Session["Products"]==null)
+            {             
+                models.Add(new ProductModel { ProductID = 1, Name = "Laptop" });
+                models.Add(new ProductModel { ProductID = 2, Name = "Mouse" });
+                Session["Products"] = models;
+            }
+            else
+            {
+                models =(List<ProductModel>) Session["Products"];
+            }
+            
+             
             return View(models);
         } 
 
@@ -32,12 +42,12 @@ namespace MVCEjemplo.Controllers
 
         // POST: Product/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ProductModel model)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                ((List<ProductModel>)Session["Products"]).Add(model);
                 return RedirectToAction("Index");
             }
             catch

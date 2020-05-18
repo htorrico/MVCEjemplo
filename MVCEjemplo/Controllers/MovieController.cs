@@ -18,8 +18,6 @@ namespace MVCEjemplo.Controllers
             models.Add(new MovieModel { MovieID = 1, Title = "Cinemark", Price = 35 });
             models.Add(new MovieModel { MovieID = 2, Title = "Cinemark", Price = 40 });
 
-
-
             return View(models);
         }
 
