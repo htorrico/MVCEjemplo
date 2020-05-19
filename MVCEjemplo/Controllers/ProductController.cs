@@ -59,16 +59,30 @@ namespace MVCEjemplo.Controllers
         // GET: Product/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ProductModel model = ((List<ProductModel>)Session["Products"]).
+                                  FirstOrDefault(x => x.ProductID == id);
+            return View(model);
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, ProductModel model)
         {
             try
             {
                 // TODO: Add update logic here
+                ProductModel modelAnt = ((List<ProductModel>)Session["Products"]).
+                                  FirstOrDefault(x => x.ProductID == id);
+                
+                //Asignar valores nuevos
+                modelAnt.ProductID = model.ProductID;
+                modelAnt.IsEnable = model.IsEnable;
+                modelAnt.Price = model.Price;
+                modelAnt.Stock = model.Stock;
+                modelAnt.Type = model.Type;
+                modelAnt.Name = model.Name;
+
+
 
                 return RedirectToAction("Index");
             }
@@ -81,16 +95,23 @@ namespace MVCEjemplo.Controllers
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            ProductModel model = ((List<ProductModel>)Session["Products"]).
+                                FirstOrDefault(x => x.ProductID == id);
+            return View(model);
         }
 
         // POST: Product/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, ProductModel model)
         {
             try
             {
                 // TODO: Add delete logic here
+                ProductModel modelAnt = ((List<ProductModel>)Session["Products"]).
+                                 FirstOrDefault(x => x.ProductID == id);
+
+                ((List<ProductModel>)Session["Products"]).Remove(modelAnt);
+
 
                 return RedirectToAction("Index");
             }
